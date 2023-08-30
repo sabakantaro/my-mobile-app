@@ -11,16 +11,18 @@ Ext.define('MyMobileApp.view.BarcodeReaderViewController', {
 
   init: function () {
     const videoDiv = this.lookupReference('video').el.dom;
-
     this.initQuagga(videoDiv);
   },
 
   initQuagga: function (videoDiv) {
+    console.log('initQuagga');
     Quagga.init(
       {
         inputStream: {
           type: 'LiveStream',
           constraints: {
+            width: 900,
+            height: 600,
             facingMode: 'environment',
           },
           target: videoDiv,
@@ -47,7 +49,7 @@ Ext.define('MyMobileApp.view.BarcodeReaderViewController', {
 
   getProductInfo: function (barcodeValue) {
     Ext.Ajax.request({
-      url: 'http://localhost:3000/products',
+      url: 'https://my-mobile-app.onrender.com/products',
       method: 'GET',
       params: {
         barcode: barcodeValue,
@@ -78,6 +80,8 @@ Ext.define('MyMobileApp.view.BarcodeReaderViewController', {
         </div>
         <div class="row">
           <div class="cell">
+            <div class="cell-item">Barcode:</div>
+            <div class="cell-item">${product?.barcode}</div>
             <div class="cell-item">Booking No:</div>
             <div class="cell-item">${product?.bookingNo}</div>
             <div class="cell-item">Connote No:</div>
@@ -203,20 +207,7 @@ Ext.define('MyMobileApp.view.BarcodeReaderViewController', {
       </style>
     `;
 
-    Ext.create('Ext.Dialog', {
-      title: 'Product Info',
-      closable: true,
-      closeAction: 'destroy',
-      width: 414 * 0.8,
-      height: 600 * 0.8,
-      layout: 'fit',
-      scrollable: true,
-      items: [
-        {
-          xtype: 'component',
-          html: barcodeInfoHTML,
-        },
-      ],
-    }).show();
+    const barcodeInfo = this.lookupReference('barcodeInfo');
+    barcodeInfo.setHtml(barcodeInfoHTML);
   },
 });
