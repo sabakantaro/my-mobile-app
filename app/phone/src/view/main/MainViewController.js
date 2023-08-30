@@ -6,10 +6,11 @@ Ext.define('MyMobileApp.view.main.MainViewController', {
     'MyMobileApp.view.signature.SignatureView',
     'MyMobileApp.view.signature.SignaturePad',
     'MyMobileApp.view.webcam.WebcamView',
+    'MyMobileApp.view.barcodereader.BarcodeReaderView',
   ],
 
   init: function (view) {
-    this.redirectTo('webcamview', true);
+    this.redirectTo('barcodereaderview', true);
   },
 
   onMenuClick: function (button) {

@@ -25,6 +25,7 @@ Ext.define('MyMobileApp.view.main.MenuView', {
         { xtype: 'container', html: '&nbsp;', height: 20 },
         { text: 'WebcamView', tag: 'webcamview' },
         { text: 'Signature', tag: 'signatureview' },
+        { text: 'Barcode Reader', tag: 'barcodereaderview' },
       ],
     },
   ],

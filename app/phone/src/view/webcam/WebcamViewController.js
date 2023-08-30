@@ -13,15 +13,24 @@ Ext.define('MyMobileApp.view.webcam.WebcamViewController', {
     var canvasDiv = this.lookupReference('canvas').el.dom;
     var canvas = canvasDiv.querySelector('canvas');
 
-    // navigator.mediaDevices
-    //   .getUserMedia({ video: true, audio: false })
-    //   .then(function (stream) {
-    //     video.srcObject = stream;
-    //     video.play();
-    //   })
-    //   .catch(function (err) {
-    //     console.log('An error occurred: ' + err);
-    //   });
+    navigator.mediaDevices
+      .getUserMedia({
+        video: {
+          facingMode: {
+            exact: 'environment',
+          },
+        },
+        // inner camera
+        // video: true,
+        audio: false,
+      })
+      .then(function (stream) {
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch(function (err) {
+        console.log('An error occurred: ' + err);
+      });
 
     video.addEventListener(
       'canplay',
@@ -53,53 +62,6 @@ Ext.define('MyMobileApp.view.webcam.WebcamViewController', {
     );
 
     me.clearphoto();
-  },
-
-  // show video
-  // playvideo: function () {
-  //   var videoDiv = this.lookupReference('video').el.dom;
-  //   var video = videoDiv.querySelector('video');
-  //   var canvasDiv = this.lookupReference('canvas').el.dom;
-  //   var canvas = canvasDiv.querySelector('canvas');
-  //   var context = canvas.getContext('2d');
-
-  //   var constraints = { video: true, audio: false };
-
-  //   navigator.mediaDevices
-  //     .getUserMedia(constraints)
-  //     .then(function (stream) {
-  //       video.srcObject = stream;
-  //       video.play();
-  //     })
-  //     .catch(function (err) {
-  //       console.log('An error occurred: ' + err);
-  //     });
-  // },
-
-  playvideo: function () {
-    var me = this;
-    var videoDiv = me.lookupReference('video').el.dom;
-    var video = videoDiv.querySelector('video');
-
-    // Constraints for the video
-    var constraints = { video: true, audio: false };
-
-    // Check if getUserMedia is supported
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function (stream) {
-          video.srcObject = stream;
-          video.onloadedmetadata = function (e) {
-            video.play();
-          };
-        })
-        .catch(function (err) {
-          console.log('An error occurred: ' + err);
-        });
-    } else {
-      console.log('Media devices not supported on this browser.');
-    }
   },
 
   clearphoto: function () {
